@@ -68,7 +68,11 @@
       promise.then(function (res) {
         done(res);
       })['catch'](function (err) {
-        done.fail(err);
+        if (done.fail) {
+          done.fail(err);
+        } else {
+          done(expect(err).toBeNull());
+        }
       });
     };
   }

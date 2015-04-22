@@ -13,10 +13,14 @@
     "url": "git@github.com:jeffmo/jasmine-pit.git"
   },
   "scripts": {
-    "test": "jasmine"
+    "test-on-jasmine-1.x": "minijasminenode ./spec/jasmine-pit-spec.js ./spec/jasmine-1.x-specific-spec.js",
+    "test-on-jasmine-2.x": "minijasminenode2 ./spec/jasmine-pit-spec.js ./spec/jasmine-2.x-specific-spec.js",
+    "test": "npm run test-on-jasmine-1.x && npm run test-on-jasmine-2.x"
   },
   "license": "MIT",
   "devDependencies": {
-    "jasmine": "^2.2.1"
+    "minijasminenode": "^1.1.1",
+    "minijasminenode2": "^1.0.0",
+    "rsvp": "^3.0.18"
   }
 }
