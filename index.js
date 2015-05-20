@@ -22,14 +22,16 @@
       promise && typeof promise.then === 'function');
   }
 
-  function wrapPromiseLegacyJasmine(promiseFn) {
+  function wrapPromiseLegacyJasmine(env, promiseFn) {
     return function () {
       var error = null;
       var isFinished = false;
 
-      runs(function () {
+      var currentSpec = env.currentSpec;
+
+      currentSpec.runs(function () {
         try {
-          var promise = promiseFn();
+          var promise = promiseFn.call(currentSpec);
 
           assertPromise(promise);
 
@@ -45,11 +47,11 @@
         }
       });
 
-      waitsFor(function () {
+      currentSpec.waitsFor(function () {
         return isFinished;
       });
 
-      runs(function () {
+      currentSpec.runs(function () {
         if (error) throw error;
       });
     };
@@ -87,7 +89,7 @@
 
     var env = jasmine.getEnv();
     var isLegacyJasmine = jasmine.version_ && jasmine.version_.major === 1;
-    var wrapFn = isLegacyJasmine ? wrapPromiseLegacyJasmine : wrapPromiseJasmine;
+    var wrapFn = isLegacyJasmine ? wrapPromiseLegacyJasmine.bind(null, env) : wrapPromiseJasmine;
 
     globalObject.pit = function pit(specName, promiseFn) {
       return env.it(specName, wrapFn(promiseFn));
