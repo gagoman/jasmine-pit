@@ -60,21 +60,18 @@
   function wrapPromiseJasmine(promiseFn) {
     return function (done) {
       var promise = promiseFn();
+      var fail = done.fail ? done.fail : function (err) { throw err; };
 
       try {
         assertPromise(promise);
-      } catch (e) {
-        done.fail(e);
+      } catch (err) {
+        fail(err);
       }
 
       promise.then(function (res) {
         done(res);
       })['catch'](function (err) {
-        if (done.fail) {
-          done.fail(err);
-        } else {
-          done(expect(err).toBeNull());
-        }
+        fail(err);
       });
     };
   }
