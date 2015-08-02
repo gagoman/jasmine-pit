@@ -97,7 +97,7 @@
     };
 
     if (isLegacyJasmine) {
-      globalObject.pit.only = function pitOnly(specName, promiseFn) { // TODO: add note for jasmine-only
+      globalObject.pit.only = function pitOnly(specName, promiseFn) {
         return env.it.only(specName, wrapFn(promiseFn));
       };
     } else {

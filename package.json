@@ -22,5 +22,8 @@
     "minijasminenode": "^1.1.1",
     "minijasminenode2": "^1.0.0",
     "rsvp": "^3.0.18"
+  },
+  "dependencies": {
+    "jasmine-only": "^0.1.1"
   }
 }
